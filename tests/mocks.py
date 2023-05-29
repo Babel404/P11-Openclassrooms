@@ -23,7 +23,7 @@ def mock_competitions_data():
     competitions = [
         {
             "name": "Test Competition One",
-            "date": "2020-03-27 10:00:00",
+            "date": "2023-05-29 10:00:00",
             "numberOfPlaces": "16",
         },
         {
@@ -33,7 +33,7 @@ def mock_competitions_data():
         },
         {
             "name": "Test Competition Three",
-            "date": "2023-01-22 15:30:00",
+            "date": "2023-07-22 15:30:00",
             "numberOfPlaces": "2",
         },
     ]
