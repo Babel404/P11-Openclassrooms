@@ -1,5 +1,5 @@
 import json
-from flask import Flask,render_template,request,redirect,flash,url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 def loadClubs():
@@ -28,10 +28,9 @@ def index():
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
-    # ISSUE 1 - Adding Try/Catch + exception message
     try:
         club = [club for club in clubs if club['email'] == request.form['email']][0]
-        return render_template('welcome.html',club=club,competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions)
     except IndexError:
         message = "Sorry, that email wasn't found."
         return render_template('index.html', message=message)
@@ -53,8 +52,14 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!')
+    if placesRequired > int(club['points']) or placesRequired < 0:
+        flash('Not enough club points.')
+    elif int(competition['numberOfPlaces']) < placesRequired:
+        flash('Too many places required.')
+    else:
+        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+        club['points'] = int(club['points']) - placesRequired
+        flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
