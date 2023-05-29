@@ -37,7 +37,7 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
+def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
@@ -47,7 +47,7 @@ def book(competition,club):
         return render_template('welcome.html', club=club, competitions=competitions)
 
 
-@app.route('/purchasePlaces',methods=['POST'])
+@app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
@@ -56,14 +56,13 @@ def purchasePlaces():
         flash('Not enough club points.')
     elif int(competition['numberOfPlaces']) < placesRequired:
         flash('Too many places required.')
+    elif placesRequired > 12:
+        flash("You can't book more than 12 places per competition.")
     else:
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
         club['points'] = int(club['points']) - placesRequired
         flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
-
-
-# TODO: Add route for points display
 
 
 @app.route('/logout')

@@ -8,7 +8,7 @@ def mock_clubs_data():
         {
             "name": "Test Club Two",
             "email": "secondclub@test.com",
-            "points": "5",
+            "points": "15",
         },
         {
             "name": "Test Club Three",
@@ -32,7 +32,7 @@ def mock_competitions_data():
             "numberOfPlaces": "8",
         },
         {
-            "name": "Test Competition Tree",
+            "name": "Test Competition Three",
             "date": "2023-01-22 15:30:00",
             "numberOfPlaces": "2",
         },

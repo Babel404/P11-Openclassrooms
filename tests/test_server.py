@@ -103,3 +103,15 @@ class TestBookingCompetition:
         assert "Too many places required." in response.data.decode()
         assert f"Points available: {expected_club_points}" in response.data.decode()
         assert f"Number of Places: {expected_competition_places}" in response.data.decode()
+
+    def test_booking_more_than_twelve_places(self, client, mock_clubs, mock_competitions):
+        club = [c for c in mock_clubs if c['name'] == 'Test Club Two'][0]
+        competition = [c for c in mock_competitions if c['name'] == 'Test Competition One'][0]
+        places = '13'
+
+        response = client.post('/purchasePlaces', data={'club': club['name'],
+                                                        'competition': competition['name'],
+                                                        'places': places
+                                                        })
+        assert response.status_code == 200
+        assert "You can&#39;t book more than 12 places per competition." in response.data.decode()
